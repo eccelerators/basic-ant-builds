@@ -1,0 +1,90 @@
+<?xml version="1.0" ?>
+<project name="Vivado">
+	
+	<condition property="is_windows">
+	    <os family="windows"/>
+	</condition>
+	
+	<property name="python-executable" value="python"/>
+	
+	<property environment="env"/>
+	
+	<target name="vivado-all" depends="
+		vivado-generate-tcl,
+		vivado-generate-spirit-component,
+		vivado-generate-xgui
+		" description="generate scripts and package from setup.py source" />
+			
+	<target name="vivado-generate-tcl" description="generate create and build .tcl files in Scripts folder with setup.py as source">
+	    <mkdir dir="scripts"/>	
+		<exec executable="${python-executable}">
+			<arg value="submodules/setup2vivado/setup2vivado/generate_tcl.py" />
+			<arg value="--infile" />
+			<arg value="setup.py" />
+			<arg value="--templatefile_create" />
+			<arg value="submodules/setup2vivado/setup2vivado/templates/create_project_template.tcl" />
+			<arg value="--templatefile_build" />
+			<arg value="submodules/setup2vivado/setup2vivado/templates/build_project_template.tcl" />
+			<arg value="--outfile_create" />
+			<arg value="scripts/create_project.tcl" />
+			<arg value="--outfile_build" />
+			<arg value="scripts/build_project.tcl" />
+		</exec> 	
+	</target>
+	
+	<target name="vivado-generate-xgui" description="generate xgui .tcl file in package/xgui folder with setup.py as source">
+	    <mkdir dir="package"/>	
+		<exec executable="${python-executable}">
+			<arg value="submodules/setup2vivado/setup2vivado/generate_xgui_tcl.py" />
+			<arg value="--infile" />
+			<arg value="setup.py" />
+			<arg value="--templatefile_xgui" />
+			<arg value="submodules/setup2vivado/setup2vivado/templates/xgui_template.tcl" />
+			<arg value="--outdir_xgui" />
+			<arg value="package/xgui" />
+		</exec>  	
+	</target>	
+	
+	<target name="vivado-generate-spirit-component" description="generate spirit compnent file in package folder with setup.py as source">
+	    <mkdir dir="package/xgui"/>	
+		<exec executable="${python-executable}">
+			<arg value="submodules/setup2vivado/setup2vivado/generate_spirit_component.py" />
+			<arg value="--infile" />
+			<arg value="setup.py" />
+			<arg value="--infile_component_axilite_template" />
+			<arg value="submodules/setup2vivado/setup2vivado/templates/component_axilite_template.xml" />
+			<arg value="--outfile_component_xml" />
+			<arg value="package/component.xml" />
+		</exec>  	
+	</target>		
+		
+	<target name="vivado-prepare">
+		<mkdir dir="work"/>
+	</target>
+			
+	<target name="vivado-create-project" description="make vivado project" depends="vivado-prepare">
+		<exec executable="cmd.exe" failonerror="true">
+			<arg line="/C vivado -mode batch -source scripts\create_project.tcl -notrace -nojournal -tempDir work -log work\vivado.log"/>
+	  	</exec>  
+	</target>
+		
+	<target name="vivado-build" description="vivado build" depends="vivado-prepare">
+		<exec executable="cmd.exe" failonerror="true">
+			<arg line="/C vivado -mode batch -source scripts/build_project_local.tcl -notrace -nojournal -tempDir work -log work/vivado.log"/>
+	  	</exec>  
+	</target>	
+		
+	<target name="vivado-clean" description="clean">
+		<delete dir="work"/> 
+		<delete dir=".Xil"/> 
+		<delete includeemptydirs="true">
+		  	<fileset dir=".">
+		  		<include name="**/vivado*.log"/>
+		  		<include name="**/vivado*.str"/>
+			  	<include name="**/vivado*.jou"/>
+			</fileset>
+		</delete>
+	</target>	
+	
+</project>
+
