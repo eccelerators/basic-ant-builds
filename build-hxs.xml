@@ -226,27 +226,27 @@
 				<include name="**/*.rst" />
 			</fileset>
 		</copy>
-		<copy todir="tmp-gen/source/resources" failonerror="false">
+		<copy todir="tmp-gen/source/src/rst/resources" failonerror="false">
 			<fileset dir="src/rst/resources">
 				<include name="**/*.png" />
 			</fileset>
 		</copy>
-		<copy todir="tmp-gen/source/resources" failonerror="false">
+		<copy todir="tmp-gen/source/hxs/resources" failonerror="false">
 			<fileset dir="hxs/resources">
 				<include name="**/*.png" />
 			</fileset>
 		</copy>
-		<copy todir="tmp-gen/source/resources">
+		<copy todir="tmp-gen/source/src-gen/c">
 			<fileset dir="src-gen/c">
 				<include name="**/*.h" />
 			</fileset>
 		</copy>
-		<copy todir="tmp-gen/source/resources">
+		<copy todir="tmp-gen/source/src-gen/python">
 			<fileset dir="src-gen/python">
 				<include name="**/*.py" />
 			</fileset>
 		</copy>
-		<copy todir="tmp-gen/source/resources">
+		<copy todir="tmp-gen/source/src-gen/simstm">
 			<fileset dir="src-gen/simstm">
 				<include name="**/*.stm" />
 			</fileset>
