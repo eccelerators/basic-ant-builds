@@ -293,17 +293,38 @@
 				<include name="**/*" />
 			</fileset>
 		</copy>	
+		
 		<copy todir="src-gen/docbook">
 			<fileset dir="tmp-gen/build">
 				<include name="**/*" />
 				<exclude name="index.xml" />
 			</fileset>
 		</copy>	
-		<copy todir="src-gen/docbook/resources">
-			<fileset dir="tmp-gen/source/resources">
+		<copy todir="src-gen/docbook/src/rst/resources" failonerror="false">
+			<fileset dir="tmp-gen/source/src/rst/resources">
 				<include name="**/*" />
 			</fileset>
-		</copy>		
+		</copy>
+		<copy todir="src-gen/docbook/hxs/resources" failonerror="false">
+			<fileset dir="tmp-gen/source/hxs/resources">
+				<include name="**/*.png" />
+			</fileset>
+		</copy>
+		<copy todir="src-gen/docbook/src-gen/c">
+			<fileset dir="tmp-gen/source/src-gen/c">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		<copy todir="src-gen/docbook/src-gen/python">
+			<fileset dir="tmp-gen/source/src-gen/python">
+				<include name="**/*.py" />
+			</fileset>
+		</copy>
+		<copy todir="src-gen/docbook/src-gen/simstm">
+			<fileset dir="tmp-gen/source/src-gen/simstm">
+				<include name="**/*" />
+			</fileset>
+		</copy>			
 	</target>
 	
 	<!-- Build xml description from rst with Sphinx 
