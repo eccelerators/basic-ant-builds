@@ -75,7 +75,8 @@
 		hxs-hxs2rst,
 		hxs-rst2html-sphinx,
 		hxs-rst2docbook,
-		hxs-docbook2pdf
+		hxs-docbook2pdf,
+		hxs-docbook2html
 		" description="compile all" />
 	
 	<target name="hxs-clean" depends="hxs-clean-docbook" description="Delete all previously generated result files">
@@ -194,6 +195,32 @@
 
 		<copy todir="${eccelerators-book.outputfolder.html}">
 			<fileset dir="${dir.target}/html5">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		
+		<copy todir="src-gen/docbook-html/src/rst/resources" failonerror="false">
+			<fileset dir="tmp-gen/source/src/rst/resources">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		<copy todir="src-gen/docbook-html/hxs/resources" failonerror="false">
+			<fileset dir="tmp-gen/source/hxs/resources">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		<copy todir="src-gen/docbook-html/src-gen/c">
+			<fileset dir="tmp-gen/source/src-gen/c">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		<copy todir="src-gen/docbook-html/src-gen/python">
+			<fileset dir="tmp-gen/source/src-gen/python">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		<copy todir="src-gen/docbook-html/src-gen/simstm">
+			<fileset dir="tmp-gen/source/src-gen/simstm">
 				<include name="**/*" />
 			</fileset>
 		</copy>
